@@ -1,4 +1,8 @@
-# SLEEX & SLEEX-VPS: Project Documentation & Technical Architecture Deck
+> **Architecture refresh:** Recent Sleex changes include keeping the eight-tab Quick Ball menu within the viewport and publishing this interactive deck directly through GitHub Pages. The deck describes multi-cloud workers, Azure Container Apps, Cloudflare Workers edge runtime, and zero-leak credential isolation as architecture principles.
+
+> **Team:** The Order of the Phoenix (v5) — Coordinator/main Harry; Coder Ron; Designer Luna; Maintainer McGonagall; Professor Dumbledore; Reviewer Hermione; Tester Ginny.
+
+# Sleex: Project Documentation & Technical Architecture Deck
 
 > **Role & Perspective:** Technical Architecture & Systems Engineering  
 > **Focus & Phase:** Live Multi-Cloud Testing Phase, Dogfooding Benchmarks & System Verification  
@@ -10,12 +14,12 @@
 
 ## Executive Summary & Strategic Positioning
 
-**Sleex** and its companion infrastructure harness **Sleex-VPS** represent an architectural leap in autonomous AI-assisted software engineering. 
+**Sleex** and its companion infrastructure harness **Sleex** represent an architectural leap in autonomous AI-assisted software engineering. 
 
 While legacy dev tools (Cursor, Windsurf) remain tethered to developer laptops, and autonomous platforms (Devin, Codex Cloud, Claude Coworker) force customers into expensive, single-model proprietary walled gardens costing hundreds of dollars per seat, **Sleex** delivers:
 
 1. **Ubiquitous 24/7 Mobile & Desktop PWA:** A zero-install, offline-capable Progressive Web App running on Cloudflare Workers and global edge static assets ([sleex.org](https://sleex.org)).
-2. **Autonomous Multi-Agent Engineering Swarm ("Claw Team"):** A coordinated 6-agent roster (Coordinator, Coder, Reviewer, Maintainer, Designer, Professor) running on OpenClaw 2026.11 that turns GitHub issues into tested, reviewed, and merged pull requests automatically.
+2. **Autonomous Multi-Agent Engineering Swarm ("Claw Team"):** A coordinated 6-agent roster (Harry (Coordinator/main), Ron (Coder), Luna (Designer), McGonagall (Maintainer), Dumbledore (Professor), Hermione (Reviewer), Ginny (Tester), Professor) running on OpenClaw 2026.11 that turns GitHub issues into tested, reviewed, and merged pull requests automatically.
 3. **90%+ Lower Operating Unit Economics:** Powered by lossless **Headroom 0.41 token compression** (saving 40–70% on LLM context tokens), Cloudflare SQLite Durable Objects, and dynamic workload placement leasing ephemeral serverless micro-workers (AWS Lambda, GCP Cloud Run, Azure Container Apps) and Oracle Cloud Always-Free ARM VPS.
 4. **Zero Vendor Lock-In & Model Sovereignty:** Intelligent multi-provider proxy with dynamic price-band parsing (`goLimits`), automatic fallback chains, free-tier prioritization (Gemini Flash, Groq, Cloudflare Workers AI), and Bring-Your-Own-Key (BYOK) support.
 
@@ -29,7 +33,7 @@ The complete presentation slide deck is compiled as an engineering-ready, 16:9 w
 
 | # | Slide Title | Category | Core Content & Value Delivered |
 |---|---|---|---|
-| **01** | **SLEEX & SLEEX-VPS: Cover Slide** | Title & Meta | Brand identity, technical architecture overview, live testing focus badge |
+| **01** | **Sleex: Cover Slide** | Title & Meta | Brand identity, technical architecture overview, live testing focus badge |
 | **02** | **Live Testing Phase: Objectives, Scope & Readiness** | Quality & Verification | Dogfooding targets (-92% cost, 24/7 autonomous loop, multi-cloud workers) |
 | **03** | **The Problem: AI Coding is Broken, Expensive & Trapped** | Architecture Context | Token bloat, desktop laptop lock-in, proprietary silos, PR review bottleneck |
 | **04** | **The Solution: The Sleex Autonomous Studio** | Breakthrough | PWA Edge UI, OpenClaw Autonomous Brain, Hybrid Ephemeral Sandboxes |
@@ -37,7 +41,7 @@ The complete presentation slide deck is compiled as an engineering-ready, 16:9 w
 | **06** | **Tech Stack (Part 1): Edge & Frontend** | Architecture | React 19, TS 7, Cloudflare Workers, ChatAgent/CodeAgent Durable Objects |
 | **07** | **Tech Stack (Part 2): VPS & Workspace v3** | Architecture | OCI Ampere ARM64, sleex-edge sshd, sleex-headroom, sleex-manager, OpenClaw |
 | **08** | **System Architecture & Traffic Routing Flow** | Flowchart | Complete vector diagram: User PWA → Edge DO → VPS → Workers → GitHub |
-| **09** | **The "Claw Team": 6 Specialized Autonomous Agents** | Multi-Agent Swarm | Coordinator, Coder, Reviewer, Maintainer, Designer, Professor roles & loop |
+| **09** | **The Order of the Phoenix (v5): Seven-Agent Team** | Multi-Agent Swarm | Harry (Coordinator/main), Ron (Coder), Luna (Designer), McGonagall (Maintainer), Dumbledore (Professor), Hermione (Reviewer), Ginny (Tester), Professor roles & loop |
 | **10** | **Model Proxy & Headroom Token Optimizer** | Unit Economics | Headroom compression (-70% tokens), `goLimits` price bands, $0.18/PR |
 | **11** | **Hybrid Ephemeral Compute: AWS, GCP & Azure** | Virtualization | Dynamic placement (Lambda, Cloud Run, Azure ACA), Zero-trust reverse SSH |
 | **12** | **Competitive Landscape: Why Sleex Wins** | Competitive Matrix| Head-to-head vs. Codex, Claude Coworker, Devin, Cursor/Windsurf |
@@ -235,8 +239,8 @@ Sleex maintains comprehensive automated test coverage across edge runtimes, dura
 ## File Manifest & GitHub Pages Publishing
 
 All presentation and architecture documentation files are published via GitHub Pages:
-- **Live Presentation Deck:** [https://pixca-net.github.io/sleex-docs/](https://pixca-net.github.io/sleex-docs/)
-- **PDF Download:** [https://pixca-net.github.io/sleex-docs/sleex-presentation.pdf](https://pixca-net.github.io/sleex-docs/sleex-presentation.pdf)
+- **Live Presentation Deck:** [https://](https://)
+- **PDF Download:** [https://sleex-presentation.pdf](https://sleex-presentation.pdf)
 - **Repository Documentation Source:** `sleex-docs/docs`
 
 1. **`index.html` / `sleex-presentation.html`**: Complete HTML5 & CSS presentation source with interactive slide deck, vector SVG diagrams, and responsive layout. Served directly via GitHub Pages.
