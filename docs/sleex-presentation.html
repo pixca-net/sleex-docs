@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SLEEX - Autonomous AI Software Engineering Studio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  @page {
+    size: 1920px 1080px;
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    width: 1920px;
+    margin: 0;
+    padding: 0;
+    background-color: #060911;
+    color: #f1f5f9;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .slide {
+    width: 1920px;
+    height: 1080px;
+    max-width: 1920px;
+    max-height: 1080px;
+    padding: 55px 75px 45px 75px;
+    page-break-after: always;
+    break-after: page;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: radial-gradient(circle at 15% 15%, rgba(37, 30, 95, 0.45) 0%, rgba(6, 9, 17, 0.98) 75%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* Slide Background Accents */
+  .slide::before {
+    content: "";
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  .slide-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    padding: 5px 14px;
+    border-radius: 999px;
+    width: fit-content;
+  }
+
+  .tag-badge.emerald {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.12);
+    border-color: rgba(52, 211, 153, 0.25);
+  }
+
+  .tag-badge.purple {
+    color: #c084fc;
+    background: rgba(192, 132, 252, 0.12);
+    border-color: rgba(192, 132, 252, 0.25);
+  }
+
+  .tag-badge.amber {
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.12);
+    border-color: rgba(251, 191, 36, 0.25);
+  }
+
+  .slide-title {
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    line-height: 1.15;
+  }
+
+  .slide-subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    color: #94a3b8;
+    line-height: 1.35;
+  }
+
+  .slide-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    color: #64748b;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Body Content */
+  .slide-content {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Footer */
+  .slide-footer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+
+  .footer-brand span {
+    color: #38bdf8;
+  }
+
+  .footer-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* Card Grid System */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .grid-6 {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+  }
+
+  .card {
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 26px;
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card.highlight {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.8) 100%);
+    border-color: rgba(56, 189, 248, 0.35);
+    box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.15);
+  }
+
+  .card.accent-purple {
+    border-color: rgba(192, 132, 252, 0.35);
+    box-shadow: 0 10px 30px -10px rgba(192, 132, 252, 0.15);
+  }
+
+  .card.accent-green {
+    border-color: rgba(52, 211, 153, 0.35);
+    box-shadow: 0 10px 30px -10px rgba(52, 211, 153, 0.15);
+  }
+
+  .card.accent-amber {
+    border-color: rgba(251, 191, 36, 0.35);
+    box-shadow: 0 10px 30px -10px rgba(251, 191, 36, 0.15);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .card-desc {
+    font-size: 15px;
+    color: #94a3b8;
+    line-height: 1.5;
+  }
+
+  .card-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .card-list li {
+    font-size: 14px;
+    color: #cbd5e1;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.45;
+  }
+
+  .card-list li::before {
+    content: "•";
+    color: #38bdf8;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  /* Metric Pill */
+  .stat-card {
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .stat-value {
+    font-size: 38px;
+    font-weight: 800;
+    color: #38bdf8;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -1px;
+  }
+
+  .stat-value.emerald { color: #34d399; }
+  .stat-value.purple { color: #c084fc; }
+  .stat-value.amber { color: #fbbf24; }
+
+  .stat-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+  }
+
+  .stat-sub {
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  /* Table styling */
+  .table-custom {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.6);
+  }
+
+  .table-custom th {
+    background: rgba(30, 41, 59, 0.8);
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .table-custom td {
+    padding: 14px 18px;
+    font-size: 14px;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    vertical-align: middle;
+  }
+
+  .table-custom tr:last-child td {
+    border-bottom: none;
+  }
+
+  .table-custom tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .pill-win {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .pill-neutral {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(148, 163, 184, 0.12);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .pill-loss {
+    display: inline-block;
+    padding: 3px 10px;
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* Code block */
+  .code-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #38bdf8;
+    padding: 2px 7px;
+    border-radius: 6px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+  }
+
+  /* Cover Slide */
+  .cover-slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 90px 100px;
+    background: radial-gradient(circle at 20% 30%, rgba(45, 27, 105, 0.6) 0%, rgba(6, 9, 17, 0.99) 70%);
+  }
+
+  .cover-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1200px;
+  }
+
+  .cover-title {
+    font-size: 84px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    background: linear-gradient(135deg, #ffffff 30%, #38bdf8 70%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .cover-tagline {
+    font-size: 32px;
+    font-weight: 500;
+    color: #cbd5e1;
+    line-height: 1.3;
+  }
+
+  .cover-sub {
+    font-size: 20px;
+    color: #94a3b8;
+    max-width: 950px;
+    line-height: 1.6;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 30px;
+  }
+
+  .cover-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cover-meta-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #64748b;
+    font-weight: 700;
+  }
+
+  .cover-meta-value {
+    font-size: 16px;
+    color: #f1f5f9;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* SVG Diagrams */
+  .diagram-container {
+    background: rgba(10, 15, 28, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 16px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Roadmap Timeline */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    position: relative;
+  }
+
+  .timeline-phase {
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+  }
+
+  .timeline-phase::after {
+    content: "";
+    position: absolute;
+    top: 26px;
+    right: -12px;
+    width: 24px;
+    height: 2px;
+    background: rgba(56, 189, 248, 0.4);
+    z-index: 2;
+  }
+
+  .timeline-phase:last-child::after {
+    display: none;
+  }
+
+  .timeline-quarter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    padding: 4px 10px;
+    border-radius: 6px;
+    width: fit-content;
+  }
+
+  .timeline-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .timeline-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .timeline-items li {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.4;
+    display: flex;
+    gap: 6px;
+  }
+
+  .timeline-items li::before {
+    content: "→";
+    color: #38bdf8;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ==================== SLIDE 1: COVER ==================== -->
+  <div class="slide cover-slide">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:40px; height:40px; background:linear-gradient(135deg, #38bdf8, #6366f1); border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:22px; color:#fff;">S</div>
+        <span style="font-size:24px; font-weight:800; letter-spacing:1px; color:#ffffff;">SLEEX</span>
+      </div>
+      <div class="tag-badge emerald">Technical Architecture & Live Testing Phase Briefing</div>
+    </div>
+
+    <div class="cover-hero">
+      <div class="tag-badge">Live Engineering Validation & Architecture</div>
+      <h1 class="cover-title">SLEEX & SLEEX-VPS</h1>
+      <p class="cover-tagline">Technical Architecture, Multi-Cloud Ephemeral Mesh (AWS, GCP, Azure) & Live Testing Phase.</p>
+      <p class="cover-sub">An edge-native, mobile-first autonomous software engineering studio. Live dogfooding verification across Cloudflare Workers SQLite Durable Objects, OpenClaw 2026.11 multi-agent coordination, and elastic cloud workers.</p>
+    </div>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Prepared By</span>
+        <span class="cover-meta-value">Engineering Architecture & Quality Assurance</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Primary Objective</span>
+        <span class="cover-meta-value">Live Dogfooding, Multi-Cloud Verification & System Reliability</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Project Platform</span>
+        <span class="cover-meta-value">Sleex Autonomous Engineering Platform</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Production App</span>
+        <span class="cover-meta-value">https://sleex.org</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 2: LIVE TESTING PHASE ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge">Live Testing Brief</div>
+        <h2 class="slide-title">Live Testing Phase: Objectives, Scope & Readiness</h2>
+        <p class="slide-subtitle">Validating end-to-end autonomous engineering execution and multi-cloud worker reliability under real-world loads.</p>
+      </div>
+      <div class="slide-number">02 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-4" style="margin-bottom: 24px;">
+        <div class="stat-card">
+          <div class="stat-value emerald">-92%</div>
+          <div class="stat-label">Operating Cost</div>
+          <div class="stat-sub">vs. traditional cloud IDEs & heavy VM sandboxes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">24 / 7</div>
+          <div class="stat-label">Autonomous Loop</div>
+          <div class="stat-sub">Continuous triage, coding, review, and merging</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value purple">3 Clouds</div>
+          <div class="stat-label">Worker Mesh</div>
+          <div class="stat-sub">AWS Lambda, GCP Cloud Run, Azure Container Apps</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value amber">&lt;45s</div>
+          <div class="stat-label">Build & Test Loop</div>
+          <div class="stat-sub">Automated validation with zero manual file edits</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card highlight">
+          <div class="card-header">
+            <div class="card-icon">🎯</div>
+            <div class="card-title">Live Dogfooding Scope</div>
+          </div>
+          <p class="card-desc">Modern autonomous engineering requires thorough, transparent validation. In this live testing phase, Sleex validates real-world issue resolution, subagent coordination stability, and zero-leak credential isolation across active production checkouts.</p>
+          <ul class="card-list">
+            <li><strong>Continuous Dogfooding:</strong> Claw Team resolves live issues directly on <span class="code-badge">Sleex</span> core and companion services.</li>
+            <li><strong>Multi-Cloud Elasticity:</strong> Live failover testing across AWS Lambda, GCP Cloud Run, and newly added Azure Container Apps Jobs.</li>
+            <li><strong>Unit Economics Benchmark:</strong> Real-world PR COGS measured at ~$0.18 per verified pull request.</li>
+          </ul>
+        </div>
+
+        <div class="card accent-purple">
+          <div class="card-header">
+            <div class="card-icon">🧪</div>
+            <div class="card-title">Live Verification Criteria</div>
+          </div>
+          <p class="card-desc">The testing phase ensures full runtime stability, zero regression risk, and robust self-healing mechanics across all edge, VPS, and cloud worker tiers.</p>
+          <ul class="card-list">
+            <li><strong>Automated Test Suites:</strong> Comprehensive unit, integration, and profile drift tests covering all services.</li>
+            <li><strong>Self-Healing Rollback:</strong> 3-minute automatic blue/green rollback verified via <span class="code-badge">updater.mjs</span>.</li>
+            <li><strong>Model Policy Enforcement:</strong> Dynamic <span class="code-badge">goLimits</span> price bands and model fallback validation.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> TECHNICAL ARCHITECTURE</div>
+      <div class="footer-meta">LIVE TESTING PHASE &amp; DOGFOODING VERIFICATION</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 3: PROBLEM STATEMENT ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge amber">Market Pain Points</div>
+        <h2 class="slide-title">The Problem: AI Coding is Broken, Expensive & Trapped</h2>
+        <p class="slide-subtitle">Why existing coding agents fail enterprise budgets and modern developer workflows.</p>
+      </div>
+      <div class="slide-number">03 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-4">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(239, 68, 68, 0.15); color:#f87171;">💸</div>
+            <div class="card-title">Crushing Token & Infra Costs</div>
+          </div>
+          <p class="card-desc">Agents dump entire codebases and mega-byte tool outputs into LLM context windows without compression. Teams burn $50–$150/day per active developer in raw model tokens and idle VM instances.</p>
+          <ul class="card-list">
+            <li>No intelligent token caching or tool deduplication</li>
+            <li>Always-on heavy cloud VMs billing 24/7</li>
+            <li>Opaque vendor pricing markups</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(239, 68, 68, 0.15); color:#f87171;">💻</div>
+            <div class="card-title">Desktop & Laptop Confinement</div>
+          </div>
+          <p class="card-desc">Existing tools (Cursor, Windsurf, VS Code plugins) require the developer to sit physically in front of a multi-core machine. You cannot triage, review, or steer automated builds from your mobile device.</p>
+          <ul class="card-list">
+            <li>Heavy local resource drain on laptops</li>
+            <li>Zero native mobile steering experience</li>
+            <li>Tasks terminate when laptop closes</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(239, 68, 68, 0.15); color:#f87171;">🔒</div>
+            <div class="card-title">Walled Garden Lock-In</div>
+          </div>
+          <p class="card-desc">OpenAI Codex locks you to GPT models; Claude Coworker restricts to Anthropic. When OpenAI or Anthropic suffers an API outage, enterprise engineering velocity grinds to a dead halt.</p>
+          <ul class="card-list">
+            <li>Zero failover between model providers</li>
+            <li>Proprietary black-box sandbox execution</li>
+            <li>Data privacy and compliance concerns</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(239, 68, 68, 0.15); color:#f87171;">🛑</div>
+            <div class="card-title">Human Bottleneck & PR Bloat</div>
+          </div>
+          <p class="card-desc">AI generates code faster than engineers can review. Without automated multi-agent peer review, test verification, and automated PR merging, engineers spend 40% of their day manually auditing mediocre AI diffs.</p>
+          <ul class="card-list">
+            <li>No independent reviewer agent gate</li>
+            <li>Lack of automated browser visual QA</li>
+            <li>Backlog of unmerged pull requests</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> MARKET ANALYSIS</div>
+      <div class="footer-meta">PAIN POINTS & STRUCTURAL INDUSTRY BOTTLENECK</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 4: THE SOLUTION ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge emerald">The Breakthrough</div>
+        <h2 class="slide-title">The Solution: The Sleex Autonomous Studio</h2>
+        <p class="slide-subtitle">A harmonized ecosystem of mobile-first edge UI, multi-agent brain, and ephemeral compute.</p>
+      </div>
+      <div class="slide-number">04 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3" style="margin-bottom: 24px;">
+        <div class="card highlight">
+          <div class="card-header">
+            <div class="card-icon">📱</div>
+            <div class="card-title">1. Ubiquitous Edge PWA</div>
+          </div>
+          <p class="card-desc">Zero-install Progressive Web App running on sleex.org. Instant Google OAuth, touch-optimized syntax highlighting, voice input, and live streaming transcripts. Monitor and steer tasks from anywhere.</p>
+          <div style="font-size:12px; color:#38bdf8; font-family:'JetBrains Mono',monospace;">Cloudflare Workers + SQLite Durable Objects</div>
+        </div>
+
+        <div class="card accent-purple">
+          <div class="card-header">
+            <div class="card-icon">🧠</div>
+            <div class="card-title">2. OpenClaw Autonomous Brain</div>
+          </div>
+          <p class="card-desc">Dedicated 6-agent autonomous workforce ("Claw Team"). Long-term cross-session memory, automated workboard progression, scheduled batch PR merges, and proactive daily digests.</p>
+          <div style="font-size:12px; color:#c084fc; font-family:'JetBrains Mono',monospace;">Coordinator • Coder • Reviewer • Maintainer • Designer</div>
+        </div>
+
+        <div class="card accent-green">
+          <div class="card-header">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">3. Hybrid Ephemeral Sandboxes</div>
+          </div>
+          <p class="card-desc">Intelligent workload placement leasing AWS Lambda micro-workers, GCP Cloud Run, or Oracle ARM VPS via encrypted reverse SSH tunnels. Zero open public ports; near-zero idle cost.</p>
+          <div style="font-size:12px; color:#34d399; font-family:'JetBrains Mono',monospace;">Dynamic Free-Tier Auto-Placement & Reverse SSH Gateway</div>
+        </div>
+      </div>
+
+      <div class="card" style="background: rgba(30, 41, 59, 0.4); border-color: rgba(56, 189, 248, 0.2);">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h4 style="font-size:18px; color:#fff; margin-bottom:4px;">Core Engineering Philosophy: "Less DIY, Leverage the Best"</h4>
+            <p style="font-size:14px; color:#94a3b8;">Sleex combines proven open standards: OpenCode SDK 2.2, OpenClaw 2026.11, Headroom token compression, and Cloudflare edge primitives to avoid reinventing commoditized agent plumbing.</p>
+          </div>
+          <div class="tag-badge emerald" style="font-size:12px;">Production Proven</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> PRODUCT ARCHITECTURE</div>
+      <div class="footer-meta">CORE VALUE PROPOSITION & ECOSYSTEM</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 5: MISSION & VISION ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge purple">Strategic North Star</div>
+        <h2 class="slide-title">Mission & Vision: Sovereign AI Engineering</h2>
+        <p class="slide-subtitle">Empowering every developer and company with an indefatigable, private software team.</p>
+      </div>
+      <div class="slide-number">05 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="margin-bottom: 24px;">
+        <div class="card" style="padding: 35px; background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%); border-color: rgba(192, 132, 252, 0.4);">
+          <div class="tag-badge purple" style="margin-bottom:12px;">Our Mission</div>
+          <h3 style="font-size: 28px; font-weight:800; color:#fff; line-height:1.25; margin-bottom:16px;">
+            "To democratize autonomous software engineering by delivering a hyper-efficient, model-agnostic, mobile-accessible AI development team that runs 24/7 at near-zero idle cost."
+          </h3>
+          <p style="font-size: 16px; color:#cbd5e1; line-height:1.6;">
+            We believe software development should not be bottlenecked by expensive SaaS tollbooths or fragile single-model monopolies. Sleex makes autonomous coding ubiquitous, transparent, and radically affordable.
+          </p>
+        </div>
+
+        <div class="card" style="padding: 35px; background: linear-gradient(135deg, rgba(14, 52, 70, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%); border-color: rgba(56, 189, 248, 0.4);">
+          <div class="tag-badge" style="margin-bottom:12px;">Our Vision</div>
+          <h3 style="font-size: 28px; font-weight:800; color:#fff; line-height:1.25; margin-bottom:16px;">
+            "The sovereign AI operating system for modern software development—where every creator commands a self-healing, continuous delivery workforce with zero vendor lock-in."
+          </h3>
+          <p style="font-size: 16px; color:#cbd5e1; line-height:1.6;">
+            A future where software projects autonomously maintain themselves, triage bug reports from users, write verified pull requests, run automated visual tests, and merge updates while engineers focus purely on creative architecture.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <div class="stat-card">
+          <div class="stat-label">1. Ubiquity</div>
+          <div style="font-size:14px; color:#cbd5e1; margin-top:4px;">No install, any device. Desktop power in your pocket.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">2. Frugality</div>
+          <div style="font-size:14px; color:#cbd5e1; margin-top:4px;">Relentless token compression & serverless free-tier prioritization.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">3. Autonomy</div>
+          <div style="font-size:14px; color:#cbd5e1; margin-top:4px;">True closed-loop engineering: Issue → Code → Review → Merge.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">4. Sovereignty</div>
+          <div style="font-size:14px; color:#cbd5e1; margin-top:4px;">Self-hostable, private data, BYOK model freedom.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> STRATEGIC NORTH STAR</div>
+      <div class="footer-meta">MISSION, VISION & GUIDING PILLARS</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 6: TECH STACK PART 1 ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge">Architecture Deep Dive</div>
+        <h2 class="slide-title">Underlying Tech Stack: Edge & Frontend</h2>
+        <p class="slide-subtitle">State-of-the-art serverless primitives engineered for sub-50ms latency and high durability.</p>
+      </div>
+      <div class="slide-number">06 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">Frontend PWA Shell</div>
+          </div>
+          <p class="card-desc">Instant loading, mobile-first progressive web app served via Cloudflare Workers Static Assets.</p>
+          <ul class="card-list">
+            <li><strong>React 19 & TypeScript 7:</strong> Ultra-fast rendering with concurrent mode and zero hydration mismatch.</li>
+            <li><strong>Lowlight / Highlight.js 11:</strong> Client-side real-time syntax highlighting for 100+ languages.</li>
+            <li><strong>PWA Service Worker:</strong> Offline shell caching, background asset updates, zero unsaved prompt loss.</li>
+            <li><strong>Playwright Suite:</strong> 145+ automated browser regression tests across mobile & desktop viewports.</li>
+          </ul>
+        </div>
+
+        <div class="card highlight">
+          <div class="card-header">
+            <div class="card-icon">🌐</div>
+            <div class="card-title">Cloudflare Edge Worker</div>
+          </div>
+          <p class="card-desc">Authoritative edge gateway (<span class="code-badge">sleex-preview</span> at <span class="code-badge">sleex.org</span>) coordinating all security and routing.</p>
+          <ul class="card-list">
+            <li><strong>Google OAuth 2.0 PKCE:</strong> Cryptographically verified identity with strict owner-scoped data boundaries.</li>
+            <li><strong>Exact-Origin Mutation Checks:</strong> Full CSRF and replay protection on all state-mutating endpoints.</li>
+            <li><strong>SSE Streaming Multiplexer:</strong> Resilient Server-Sent Events with idempotent message receipts and reconnect.</li>
+            <li><strong>Zero Server Maintenance:</strong> Globally distributed edge execution with zero idle costs.</li>
+          </ul>
+        </div>
+
+        <div class="card accent-purple">
+          <div class="card-header">
+            <div class="card-icon">🗄️</div>
+            <div class="card-title">SQLite Durable Objects</div>
+          </div>
+          <p class="card-desc">Distributed ACID storage and coordination with zero relational database latency.</p>
+          <ul class="card-list">
+            <li><strong>ChatAgent:</strong> Authoritative chat transcripts, conversation indices, model selections, and pin metadata.</li>
+            <li><strong>CodeAgent:</strong> MCP lifecycle management, isolated branch states, and uncertain-write ledger reconciliation.</li>
+            <li><strong>MemberDirectory:</strong> Admin RBAC, GitHub App encrypted key vaults, and Web Push notifications.</li>
+            <li><strong>In-Memory Alarms:</strong> Native transactional timers powering queues and task retries without external Redis.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> TECHNICAL ARCHITECTURE (PART 1)</div>
+      <div class="footer-meta">FRONTEND & CLOUDFLARE EDGE FOUNDATION</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 7: TECH STACK PART 2 ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge emerald">Architecture Deep Dive</div>
+        <h2 class="slide-title">Underlying Tech Stack: VPS & Workspace v3</h2>
+        <p class="slide-subtitle">Hardened infrastructure harness powering the autonomous multi-agent engineering engine.</p>
+      </div>
+      <div class="slide-number">07 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-4" style="margin-bottom: 20px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">🛡️</div>
+            <div class="card-title">sleex-edge</div>
+          </div>
+          <p class="card-desc">Hardened OpenSSH reverse proxy container. Uses <span class="code-badge">box-key.mjs</span> to dynamically validate worker public keys against live leases.</p>
+          <ul class="card-list">
+            <li>Drops ALL Linux capabilities</li>
+            <li>No inbound firewall ports</li>
+            <li>Unix sockets in <span class="code-badge">/run/sleex-boxes</span></li>
+          </ul>
+        </div>
+
+        <div class="card highlight">
+          <div class="card-header">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">sleex-headroom</div>
+          </div>
+          <p class="card-desc">Token optimization proxy (Headroom 0.41.0). Compresses verbose tool outputs, file contents, and schemas before LLM dispatch.</p>
+          <ul class="card-list">
+            <li>40%–70% model token savings</li>
+            <li>Isolated internal Docker network</li>
+            <li>Supports ChatGPT & Claude Codex</li>
+          </ul>
+        </div>
+
+        <div class="card accent-purple">
+          <div class="card-header">
+            <div class="card-icon">⚙️</div>
+            <div class="card-title">sleex-manager</div>
+          </div>
+          <p class="card-desc">VPS Admin REST daemon. Powers one-click blue/green stack updates (<span class="code-badge">updater.mjs</span>), Docker health checks, and rollbacks.</p>
+          <ul class="card-list">
+            <li>Zero-downtime Portainer updates</li>
+            <li>Self-healing 3-min health check</li>
+            <li>Automatic build cache reclamation</li>
+          </ul>
+        </div>
+
+        <div class="card accent-green">
+          <div class="card-header">
+            <div class="card-icon">🤖</div>
+            <div class="card-title">sleex-assistant</div>
+          </div>
+          <p class="card-desc">OpenClaw 2026.11 container. Houses persistent agent memory across sessions, cron jobs, ClawHub skills, and the 6-agent roster.</p>
+          <ul class="card-list">
+            <li>6 GB RAM / 2 vCPU memory-capped</li>
+            <li>Cross-session persistent memory</li>
+            <li>Direct WebSockets gateway</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="background: rgba(15, 23, 42, 0.85); border-color: rgba(52, 211, 153, 0.3);">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h4 style="font-size:16px; color:#fff; margin-bottom:4px;">Host Infrastructure: Oracle Cloud Infrastructure (OCI) Always-Free Ampere A1</h4>
+            <p style="font-size:13px; color:#94a3b8;">4 OCPUs (ARM64), 24 GB RAM, 50 GB Boot Volume, WireGuard VPN Mesh (WGDashboard), Caddy Reverse Proxy, and private OCI cost diagnostics dashboard at <span class="code-badge">/srv/sleex-dashboard</span>.</p>
+          </div>
+          <div class="tag-badge emerald" style="font-size:12px;">$0 / month Infra Baseline</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> TECHNICAL ARCHITECTURE (PART 2)</div>
+      <div class="footer-meta">WORKSPACE V3 DOCKER ENGINE & HARNESS</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 8: FLOWCHART 1 ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge">System Flow Chart</div>
+        <h2 class="slide-title">System Architecture & Traffic Routing Flow</h2>
+        <p class="slide-subtitle">End-to-end request lifecycle from user device through Cloudflare edge to VPS & workers.</p>
+      </div>
+      <div class="slide-number">08 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="diagram-container">
+        <svg viewBox="0 0 1700 520" width="100%" height="500" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="cfGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f38020"/>
+              <stop offset="100%" stop-color="#faad3f"/>
+            </linearGradient>
+            <linearGradient id="vpsGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#3b82f6"/>
+              <stop offset="100%" stop-color="#1d4ed8"/>
+            </linearGradient>
+            <linearGradient id="workerGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#10b981"/>
+              <stop offset="100%" stop-color="#047857"/>
+            </linearGradient>
+            <linearGradient id="agentGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#8b5cf6"/>
+              <stop offset="100%" stop-color="#6d28d9"/>
+            </linearGradient>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
+
+          <!-- User Device -->
+          <g transform="translate(40, 190)">
+            <rect width="200" height="140" rx="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+            <text x="100" y="45" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#fff" text-anchor="middle">User Client</text>
+            <text x="100" y="75" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">PWA (Mobile / Desktop)</text>
+            <text x="100" y="98" font-family="'JetBrains Mono', monospace" font-size="12" fill="#38bdf8" text-anchor="middle">sleex.org</text>
+            <text x="100" y="118" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Google OAuth 2.0 PKCE</text>
+          </g>
+
+          <!-- Arrow User to CF -->
+          <path d="M 240 260 L 320 260" stroke="#38bdf8" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+          <text x="280" y="245" font-size="12" fill="#94a3b8" text-anchor="middle">HTTPS / WSS</text>
+
+          <!-- Cloudflare Edge Layer -->
+          <g transform="translate(320, 70)">
+            <rect width="360" height="380" rx="18" fill="rgba(15, 23, 42, 0.85)" stroke="#f38020" stroke-width="2"/>
+            <rect x="20" y="20" width="320" height="40" rx="8" fill="url(#cfGrad)"/>
+            <text x="180" y="46" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" fill="#fff" text-anchor="middle">Cloudflare Edge (sleex-preview)</text>
+            
+            <!-- Durable Objects -->
+            <rect x="25" y="80" width="310" height="80" rx="10" fill="#1e293b" stroke="rgba(255,255,255,0.1)"/>
+            <text x="40" y="105" font-size="14" font-weight="700" fill="#f38020">CHAT Durable Object</text>
+            <text x="40" y="128" font-size="12" fill="#cbd5e1">ChatAgent: Transcripts, Pins, SSE Streams</text>
+            <text x="40" y="146" font-size="11" fill="#64748b">SQLite Storage • Idempotent Receipts</text>
+
+            <rect x="25" y="175" width="310" height="80" rx="10" fill="#1e293b" stroke="rgba(255,255,255,0.1)"/>
+            <text x="40" y="200" font-size="14" font-weight="700" fill="#38bdf8">CODE Durable Object</text>
+            <text x="40" y="223" font-size="12" fill="#cbd5e1">CodeAgent: Tasks, MCP, Uncertainty Ledger</text>
+            <text x="40" y="241" font-size="11" fill="#64748b">Plan/Review/Build Server Enforcement</text>
+
+            <rect x="25" y="270" width="310" height="80" rx="10" fill="#1e293b" stroke="rgba(255,255,255,0.1)"/>
+            <text x="40" y="295" font-size="14" font-weight="700" fill="#34d399">Model Proxy & Cost Router</text>
+            <text x="40" y="318" font-size="12" fill="#cbd5e1">goLimits Live Bands, Gemini Free Priority</text>
+            <text x="40" y="336" font-size="11" fill="#64748b">OpenRouter, Claude, Codex, Groq, NVIDIA</text>
+          </g>
+
+          <!-- Arrow CF to VPS -->
+          <path d="M 680 260 L 760 260" stroke="#f38020" stroke-width="3" fill="none"/>
+          <text x="720" y="245" font-size="12" fill="#94a3b8" text-anchor="middle">CF Access Tunnel</text>
+
+          <!-- Oracle VPS Stack -->
+          <g transform="translate(760, 50)">
+            <rect width="480" height="420" rx="18" fill="rgba(15, 23, 42, 0.9)" stroke="#3b82f6" stroke-width="2"/>
+            <rect x="20" y="20" width="440" height="40" rx="8" fill="url(#vpsGrad)"/>
+            <text x="240" y="46" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" fill="#fff" text-anchor="middle">Oracle ARM VPS (Workspace v3)</text>
+
+            <!-- sleex-manager -->
+            <rect x="25" y="75" width="205" height="100" rx="10" fill="#1e293b" stroke="rgba(255,255,255,0.1)"/>
+            <text x="35" y="100" font-size="14" font-weight="700" fill="#38bdf8">sleex-manager (Admin)</text>
+            <text x="35" y="122" font-size="12" fill="#cbd5e1">Admin API & Health</text>
+            <text x="35" y="142" font-size="11" fill="#94a3b8">Zero-Downtime Updater</text>
+            <text x="35" y="160" font-size="10" fill="#64748b">Portainer API Integration</text>
+
+            <!-- sleex-headroom -->
+            <rect x="250" y="75" width="205" height="100" rx="10" fill="#1e293b" stroke="rgba(255,255,255,0.1)"/>
+            <text x="260" y="100" font-size="14" font-weight="700" fill="#10b981">sleex-headroom (Proxy)</text>
+            <text x="260" y="122" font-size="12" fill="#cbd5e1">Token Compressor</text>
+            <text x="260" y="142" font-size="11" fill="#94a3b8">Stripping Tool Buffers</text>
+            <text x="260" y="160" font-size="10" fill="#10b981">-40% to -70% Model Tokens</text>
+
+            <!-- sleex-assistant -->
+            <rect x="25" y="190" width="430" height="110" rx="10" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.5"/>
+            <text x="35" y="215" font-size="14" font-weight="700" fill="#c084fc">sleex-assistant: OpenClaw 2026.11 (Swarm)</text>
+            <text x="35" y="238" font-size="12" fill="#cbd5e1">Multi-Agent Brain: Coordinator, Coder, Reviewer, Maintainer, Designer</text>
+            <text x="35" y="258" font-size="12" fill="#94a3b8">Cross-Session Shared Memory • Cron Scheduler • Crabbox Provider</text>
+            <text x="35" y="278" font-size="11" fill="#64748b">Memory-capped 6GB RAM • Hardened capability drop</text>
+
+            <!-- sleex-edge & sleex-worker -->
+            <rect x="25" y="315" width="205" height="85" rx="10" fill="#1e293b" stroke="rgba(255,255,255,0.1)"/>
+            <text x="35" y="340" font-size="14" font-weight="700" fill="#38bdf8">sleex-edge (Gateway)</text>
+            <text x="35" y="362" font-size="12" fill="#cbd5e1">Reverse SSH Gateway</text>
+            <text x="35" y="382" font-size="11" fill="#64748b">Dynamic Lease Validation</text>
+
+            <rect x="250" y="315" width="205" height="85" rx="10" fill="#1e293b" stroke="rgba(255,255,255,0.1)"/>
+            <text x="260" y="340" font-size="14" font-weight="700" fill="#34d399">sleex-worker</text>
+            <text x="260" y="362" font-size="12" fill="#cbd5e1">VPS Local Worker Sandbox</text>
+            <text x="260" y="382" font-size="11" fill="#64748b">Playwright Chromium + Git</text>
+          </g>
+
+          <!-- Arrow VPS to Cloud Workers -->
+          <path d="M 1240 360 L 1320 360" stroke="#10b981" stroke-width="3" stroke-dasharray="6,6" fill="none"/>
+          <text x="1280" y="345" font-size="12" fill="#34d399" text-anchor="middle">Reverse SSH</text>
+
+          <!-- Ephemeral Cloud Workers -->
+          <g transform="translate(1320, 60)">
+            <rect width="320" height="395" rx="18" fill="rgba(15, 23, 42, 0.85)" stroke="#10b981" stroke-width="2"/>
+            <rect x="20" y="16" width="280" height="36" rx="8" fill="url(#workerGrad)"/>
+            <text x="160" y="40" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">Ephemeral Cloud Workers (Tri-Cloud)</text>
+
+            <rect x="25" y="65" width="270" height="60" rx="8" fill="#1e293b"/>
+            <text x="35" y="86" font-size="12" font-weight="700" fill="#34d399">AWS Lambda micro-workers</text>
+            <text x="35" y="103" font-size="10" fill="#cbd5e1">&lt;12 min tasks • ~170 free runs/mo</text>
+            <text x="35" y="117" font-size="9" fill="#64748b">Fast startup, docs, unit tests</text>
+
+            <rect x="25" y="135" width="270" height="60" rx="8" fill="#1e293b"/>
+            <text x="35" y="156" font-size="12" font-weight="700" fill="#38bdf8">GCP Cloud Run containers</text>
+            <text x="35" y="173" font-size="10" fill="#cbd5e1">&lt;30 min heavy builds • Free quota</text>
+            <text x="35" y="187" font-size="9" fill="#64748b">High CPU, compiler & full suites</text>
+
+            <rect x="25" y="205" width="270" height="60" rx="8" fill="#1e293b"/>
+            <text x="35" y="226" font-size="12" font-weight="700" fill="#c084fc">Azure Container Apps (ACA)</text>
+            <text x="35" y="243" font-size="10" fill="#cbd5e1">Microsoft.App/jobs • ARM OAuth2</text>
+            <text x="35" y="257" font-size="9" fill="#64748b">On-demand gated container jobs</text>
+
+            <rect x="25" y="275" width="270" height="60" rx="8" fill="#1e293b"/>
+            <text x="35" y="296" font-size="12" font-weight="700" fill="#fbbf24">GitHub Integration &amp; MCP</text>
+            <text x="35" y="313" font-size="10" fill="#cbd5e1">Branch creation, Checks, PRs, Merge</text>
+            <text x="35" y="327" font-size="9" fill="#64748b">Sleex token proxy / claw-mcp</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> ARCHITECTURE FLOWCHART</div>
+      <div class="footer-meta">GLOBAL EDGE ROUTING & REVERSE TUNNEL SPECIFICATION</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 9: THE CLAW TEAM ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge purple">Autonomous Workforce</div>
+        <h2 class="slide-title">The "Claw Team": 6 Specialized Autonomous Agents</h2>
+        <p class="slide-subtitle">A coordinated agent swarm that transforms GitHub issues into tested, reviewed, and merged PRs.</p>
+      </div>
+      <div class="slide-number">09 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3" style="gap:18px; margin-bottom:16px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(56, 189, 248, 0.15); color:#38bdf8;">🎯</div>
+            <div>
+              <div class="card-title" style="font-size:18px;">Coordinator (main)</div>
+              <div style="font-size:12px; color:#64748b;">Orchestrator & Loop Lead</div>
+            </div>
+          </div>
+          <p class="card-desc">Runs every 15 mins via cron (<span class="code-badge">sleex:project-loop</span>). Reads project Workboards, creates workflow cards, dispatches child workers, and sends a daily 18:00 digest.</p>
+        </div>
+
+        <div class="card highlight">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(52, 211, 153, 0.15); color:#34d399;">💻</div>
+            <div>
+              <div class="card-title" style="font-size:18px;">Coder (coder)</div>
+              <div style="font-size:12px; color:#34d399;">Software Engineer</div>
+            </div>
+          </div>
+          <p class="card-desc">Operates in dedicated child sessions placed on Lambda, Cloud Run, or VPS. Clones worktree, builds features/fixes using OpenCode SDK 2.2, validates tests, and pushes PR branch.</p>
+        </div>
+
+        <div class="card accent-purple">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(192, 132, 252, 0.15); color:#c084fc;">🔍</div>
+            <div>
+              <div class="card-title" style="font-size:18px;">Reviewer (reviewer)</div>
+              <div style="font-size:12px; color:#c084fc;">Quality Gatekeeper</div>
+            </div>
+          </div>
+          <p class="card-desc">Triggered automatically on every PR. Evaluates code against requirements, checks test coverage, and runs security checks using cost-free Gemini Flash models. Never merges.</p>
+        </div>
+      </div>
+
+      <div class="grid-3" style="gap:18px; margin-bottom:16px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(251, 191, 36, 0.15); color:#fbbf24;">🛡️</div>
+            <div>
+              <div class="card-title" style="font-size:18px;">Maintainer (maintainer)</div>
+              <div style="font-size:12px; color:#fbbf24;">Release & Merge Master</div>
+            </div>
+          </div>
+          <p class="card-desc">Runs scheduled batch merges at 12:00 and 20:00 UTC+8 (or instantly for urgent tags). Handles repository hygiene, dependency updates, and branch retirement.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(236, 72, 153, 0.15); color:#ec4899;">🎨</div>
+            <div>
+              <div class="card-title" style="font-size:18px;">Designer (designer)</div>
+              <div style="font-size:12px; color:#ec4899;">UI/UX & Visual QA</div>
+            </div>
+          </div>
+          <p class="card-desc">Takes automated Playwright browser screenshots across viewports. Fixes CSS layout glitches, dark/light themes, and ensures pixel-perfect responsive mobile ergonomics.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(99, 102, 241, 0.15); color:#818cf8;">📚</div>
+            <div>
+              <div class="card-title" style="font-size:18px;">Professor (professor)</div>
+              <div style="font-size:12px; color:#818cf8;">Architect & Auditor</div>
+            </div>
+          </div>
+          <p class="card-desc">Performs architectural audits, benchmarks model latency/token usage, analyzes technical debt, and maintains persistent project memory and documentation.</p>
+        </div>
+      </div>
+
+      <!-- Workboard Progression -->
+      <div class="card" style="padding:14px 20px; background:rgba(30,41,59,0.5);">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; font-weight:700; color:#cbd5e1; text-transform:uppercase;">Workboard Card Lifecycle:</span>
+          <div style="display:flex; gap:12px; font-size:12px; font-weight:600;">
+            <span style="color:#94a3b8;">1. Triage (Watch)</span>
+            <span style="color:#38bdf8;">→ 2. Todo</span>
+            <span style="color:#fbbf24;">→ 3. Running (Coder)</span>
+            <span style="color:#c084fc;">→ 4. Review (Reviewer)</span>
+            <span style="color:#34d399;">→ 5. Approved</span>
+            <span style="color:#10b981;">→ 6. Done (Maintainer Merge)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> MULTI-AGENT SWARM SPECIFICATION</div>
+      <div class="footer-meta">AUTONOMOUS 6-AGENT WORKFORCE STRUCTURE</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 10: MODEL PROXY & TOKEN OPTIMIZER ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge emerald">Unit Economics</div>
+        <h2 class="slide-title">Model Proxy & Headroom Token Optimizer</h2>
+        <p class="slide-subtitle">Slashing inference expenditure by 70% through real-time compression and intelligent routing.</p>
+      </div>
+      <div class="slide-number">10 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="margin-bottom:20px;">
+        <div class="card highlight">
+          <div class="card-header">
+            <div class="card-icon">⚡</div>
+            <div class="card-title">Headroom Lossless Compression</div>
+          </div>
+          <p class="card-desc">Headroom 0.41.0 sits as an in-line proxy between Sleex Assistant and upstream LLM providers (Codex, Claude, OpenAI). It strips repeated system prompts, redundant JSON tool signatures, and trims verbose terminal buffers.</p>
+          <ul class="card-list">
+            <li><strong>40% to 70% Token Reduction:</strong> Cuts multi-turn coding context sizes dramatically.</li>
+            <li><strong>Lower Latency:</strong> Shorter prompt evaluation time means faster Time-To-First-Token (TTFT).</li>
+            <li><strong>Zero Information Loss:</strong> Critical code blocks, syntax trees, and error stack traces remain untouched.</li>
+            <li><strong>Private Network Isolation:</strong> Runs strictly on the internal <span class="code-badge">sleex-headroom</span> Docker network.</li>
+          </ul>
+        </div>
+
+        <div class="card accent-purple">
+          <div class="card-header">
+            <div class="card-icon">🧠</div>
+            <div class="card-title">Dynamic Price Band Routing (<span class="code-badge">goLimits</span>)</div>
+          </div>
+          <p class="card-desc">Sleex automatically parses live provider limits and allowance bands, categorizing models by true cost efficiency:</p>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+            <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(52,211,153,0.1); border-radius:8px;">
+              <span style="font-weight:700; color:#34d399; font-size:13px;">FREE TIER FIRST:</span>
+              <span style="color:#cbd5e1; font-size:13px;">Gemini 1.5/2.0 Flash, Cloudflare Workers AI, Groq</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(56,189,248,0.1); border-radius:8px;">
+              <span style="font-weight:700; color:#38bdf8; font-size:13px;">SUPERCHEAP (&gt;$60/allowance):</span>
+              <span style="color:#cbd5e1; font-size:13px;">DeepSeek V3/V4.1 Flash, GLM-4/5.3 Flash</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(251,191,36,0.1); border-radius:8px;">
+              <span style="font-weight:700; color:#fbbf24; font-size:13px;">CHEAP / MEDIUM ($20-$40):</span>
+              <span style="color:#cbd5e1; font-size:13px;">Llama 3.3 70B, Qwen 2.5 Coder 32B</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(248,113,113,0.1); border-radius:8px;">
+              <span style="font-weight:700; color:#f87171; font-size:13px;">EXPENSIVE (&lt;$20):</span>
+              <span style="color:#cbd5e1; font-size:13px;">Claude 3.5 Sonnet, GPT-4o, o1-preview (Heavy tasks only)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="stat-card">
+          <div class="stat-value emerald">$0.18</div>
+          <div class="stat-label">Avg. Cost per PR</div>
+          <div class="stat-sub">Compared to $2.40 on standard uncompressed agents</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">BYOK Flexibility</div>
+          <div class="stat-sub">Enterprises use negotiated corporate keys with 0 markup</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value purple">0 Outage</div>
+          <div class="stat-label">Model Fallback Chain</div>
+          <div class="stat-sub">Primary failover routes immediately to next healthy provider</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> COST OPTIMIZATION ARCHITECTURE</div>
+      <div class="footer-meta">INFERENCE UNIT ECONOMICS & TOKEN COMPRESSION</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 11: HYBRID COMPUTE & REVERSE SSH ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge">Multi-Cloud Compute Virtualization</div>
+        <h2 class="slide-title">Hybrid Ephemeral Compute: AWS, GCP & Azure</h2>
+        <p class="slide-subtitle">Solving the compute bottleneck: Dynamic placement across Lambda, Cloud Run, Azure Container Apps & VPS.</p>
+      </div>
+      <div class="slide-number">11 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="margin-bottom:20px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">⚙️</div>
+            <div class="card-title">Dynamic Tri-Cloud Workload Placement</div>
+          </div>
+          <p class="card-desc">Sleex dynamically dispatches tasks according to compute profile, consuming free serverless quotas across providers before touching the VPS hub:</p>
+          <ul class="card-list">
+            <li><strong>No Shell (Reviews, Plans):</strong> Executed on Gateway (0 container cost).</li>
+            <li><strong>Light Tasks (&lt;12m):</strong> AWS Lambda (170 free runs/mo, 2 concurrent slots).</li>
+            <li><strong>Heavy Builds (&lt;30m):</strong> Google Cloud Run (free-tier high-memory compute).</li>
+            <li><strong>Gated Container Jobs:</strong> Azure Container Apps (ACA) Jobs via ARM API (<span class="code-badge">Microsoft.App/jobs</span>).</li>
+            <li><strong>Persistent Baseline / Fallback:</strong> Dedicated Oracle ARM VPS.</li>
+          </ul>
+        </div>
+
+        <div class="card highlight">
+          <div class="card-header">
+            <div class="card-icon">🔒</div>
+            <div class="card-title">Encrypted Reverse SSH Tunneling</div>
+          </div>
+          <p class="card-desc">How does OpenClaw communicate with ephemeral Lambda, Cloud Run, and Azure containers behind NAT without opening public firewall ports?</p>
+          <ul class="card-list">
+            <li><strong>Outbound-Only Tunnel:</strong> Ephemeral worker boots and initiates an outbound SSH reverse connection to <span class="code-badge">edge.sleex.org</span> via Cloudflare Access.</li>
+            <li><strong>Cryptographic Authorization:</strong> <span class="code-badge">sleex-edge</span> verifies the lease token with Sleex API (<span class="code-badge">box-key.mjs</span>). If approved, it accepts the reverse socket.</li>
+            <li><strong>Unix Domain Sockets:</strong> Reverse socket is exposed inside <span class="code-badge">/run/sleex-boxes/&lt;lease-id&gt;.sock</span>.</li>
+            <li><strong>Zero Public Exposure:</strong> The Assistant SSHes into the local socket directly. The worker never exposes a public IP or open port!</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="background:rgba(30,41,59,0.5); padding:16px 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; gap:16px; align-items:center;">
+            <span style="font-weight:700; color:#38bdf8; font-size:14px;">SECURITY BENCHMARK:</span>
+            <span style="font-size:13px; color:#cbd5e1;">Zero Inbound Firewall Holes • All Ephemeral Workers Disposable • End-to-End Cryptographic Token Isolation</span>
+          </div>
+          <div class="tag-badge emerald" style="font-size:11px;">Zero-Trust Architecture</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> COMPUTE VIRTUALIZATION</div>
+      <div class="footer-meta">MULTI-CLOUD SERVERLESS HARNESS (AWS, GCP, AZURE)</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 12: COMPETITOR ANALYSIS ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge amber">Market Positioning</div>
+        <h2 class="slide-title">Competitive Landscape: Why Sleex Wins</h2>
+        <p class="slide-subtitle">Direct architectural and commercial comparison against leading AI engineering platforms.</p>
+      </div>
+      <div class="slide-number">12 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <table class="table-custom">
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Primary Form Factor</th>
+            <th>Cost & Pricing</th>
+            <th>Autonomous Loop</th>
+            <th>Model Choice</th>
+            <th>Infra & Privacy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: rgba(56, 189, 248, 0.08);">
+            <td><strong style="color:#38bdf8; font-size:16px;">SLEEX</strong></td>
+            <td><span class="pill-win">Mobile & Desktop PWA</span></td>
+            <td><span class="pill-win">Micro-cost ($0.18/PR) or BYOK</span></td>
+            <td><span class="pill-win">24/7 Swarm (6 Agents)</span></td>
+            <td><span class="pill-win">8+ Providers (Auto-Fallback)</span></td>
+            <td><span class="pill-win">Self-Sovereign VPS / Hybrid</span></td>
+          </tr>
+          <tr>
+            <td><strong>OpenAI Codex</strong></td>
+            <td><span class="pill-neutral">Mac App / ChatGPT Mobile</span></td>
+            <td><span class="pill-neutral">ChatGPT Plus/Pro ($20–$200/mo)</span></td>
+            <td><span class="pill-neutral">Single task runner</span></td>
+            <td><span class="pill-loss">OpenAI Only (Locked)</span></td>
+            <td><span class="pill-loss">Proprietary Cloud Sandbox</span></td>
+          </tr>
+          <tr>
+            <td><strong>Claude Coworker</strong></td>
+            <td><span class="pill-neutral">Desktop / Web (US Waitlist)</span></td>
+            <td><span class="pill-loss">Claude Pro/Max ($20–$100+/mo)</span></td>
+            <td><span class="pill-neutral">Proactive checks</span></td>
+            <td><span class="pill-loss">Anthropic Claude Only</span></td>
+            <td><span class="pill-loss">Closed Cloud Computer</span></td>
+          </tr>
+          <tr>
+            <td><strong>Devin (Cognition)</strong></td>
+            <td><span class="pill-neutral">Web Browser Console</span></td>
+            <td><span class="pill-loss">Enterprise ($500+/user/mo)</span></td>
+            <td><span class="pill-win">Autonomous engineer</span></td>
+            <td><span class="pill-loss">Proprietary Black Box</span></td>
+            <td><span class="pill-loss">Opaque Hosted VM</span></td>
+          </tr>
+          <tr>
+            <td><strong>Cursor / Windsurf</strong></td>
+            <td><span class="pill-loss">Desktop IDE Extension Only</span></td>
+            <td><span class="pill-neutral">$20/mo + usage overages</span></td>
+            <td><span class="pill-loss">Autocomplete / Chat only</span></td>
+            <td><span class="pill-win">Configurable LLMs</span></td>
+            <td><span class="pill-neutral">Local Developer Laptop</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="grid-3" style="margin-top:20px;">
+        <div class="stat-card">
+          <div class="stat-label">Advantage 1: Mobile Ubiquity</div>
+          <div style="font-size:13px; color:#cbd5e1; margin-top:4px;">Full autonomous engineering from your phone with 0 app store install required.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Advantage 2: Token Compression</div>
+          <div style="font-size:13px; color:#cbd5e1; margin-top:4px;">Headroom engine makes high-frequency multi-agent runs financially viable.</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Advantage 3: Closed-Loop Delivery</div>
+          <div style="font-size:13px; color:#cbd5e1; margin-top:4px;">Full lifecycle from card triage to code, peer review, and scheduled batch merge.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> COMPETITIVE POSITIONING</div>
+      <div class="footer-meta">HEAD-TO-HEAD FEATURE & COST MATRIX</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 13: SWOT ANALYSIS ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge purple">Strategic Audit</div>
+        <h2 class="slide-title">SWOT Analysis: Strategic Evaluation</h2>
+        <p class="slide-subtitle">Honest self-assessment of internal capabilities, limitations, and external market drivers.</p>
+      </div>
+      <div class="slide-number">13 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="gap:24px;">
+        <!-- Strengths -->
+        <div class="card accent-green" style="padding:22px;">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(52,211,153,0.15); color:#34d399;">S</div>
+            <div class="card-title" style="color:#34d399;">Strengths (Internal)</div>
+          </div>
+          <ul class="card-list">
+            <li><strong>Radical Cost Efficiency:</strong> 90%+ lower operating cost using Cloudflare edge, OCI Free Tier, and Headroom compression.</li>
+            <li><strong>True Multi-Agent Autonomy:</strong> 6 specialized agents handling triage, coding, review, and merging.</li>
+            <li><strong>Zero-Install Mobile Ergonomics:</strong> Full PWA accessibility on phones and tablets.</li>
+            <li><strong>Model-Agnostic Resilience:</strong> Auto-failover across 8+ LLMs; no single point of failure.</li>
+            <li><strong>Production-Hardened Zero Downtime:</strong> Built-in automated blue/green stack updater.</li>
+          </ul>
+        </div>
+
+        <!-- Weaknesses -->
+        <div class="card" style="padding:22px; border-color:rgba(239,68,68,0.3);">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(239,68,68,0.15); color:#f87171;">W</div>
+            <div class="card-title" style="color:#f87171;">Weaknesses (Internal)</div>
+          </div>
+          <ul class="card-list">
+            <li><strong>Setup Complexity:</strong> Current hybrid deployment (Cloudflare + VPS + Cloud Run) requires technical DevOps knowledge.</li>
+            <li><strong>Single-Tenant Architecture:</strong> Needs turnkey multi-tenant SaaS provisioning for non-technical teams.</li>
+            <li><strong>Free Tier Quota Dependency:</strong> Heavy enterprise concurrency will eventually exceed serverless free allocations.</li>
+            <li><strong>Brand Awareness:</strong> Brand new market entrant compared to venture-backed incumbents (Cursor, Cognition).</li>
+          </ul>
+        </div>
+
+        <!-- Opportunities -->
+        <div class="card highlight" style="padding:22px;">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(56,189,248,0.15); color:#38bdf8;">O</div>
+            <div class="card-title" style="color:#38bdf8;">Opportunities (External)</div>
+          </div>
+          <ul class="card-list">
+            <li><strong>$30B+ DevTools AI Market:</strong> Exploding corporate demand for automated repository maintenance.</li>
+            <li><strong>"AI Junior Developer as a Service":</strong> Selling guaranteed pull request resolution for $499/mo per repo.</li>
+            <li><strong>Enterprise Sovereign On-Prem:</strong> High-margin licensing for financial/healthcare teams needing air-gapped security.</li>
+            <li><strong>Headroom Token Optimization SaaS:</strong> Monetizing the token-saving compression proxy as a standalone enterprise product.</li>
+          </ul>
+        </div>
+
+        <!-- Threats -->
+        <div class="card accent-amber" style="padding:22px;">
+          <div class="card-header">
+            <div class="card-icon" style="background:rgba(251,191,36,0.15); color:#fbbf24;">T</div>
+            <div class="card-title" style="color:#fbbf24;">Threats (External)</div>
+          </div>
+          <ul class="card-list">
+            <li><strong>Hyperscaler Commoditization:</strong> Aggressive API price cuts by Google, Microsoft, and OpenAI.</li>
+            <li><strong>Upstream Dependency Churn:</strong> Breaking changes in OpenClaw, OpenCode, or Cloudflare Workers APIs.</li>
+            <li><strong>GitHub / Microsoft Native Bundling:</strong> Copilot Workspaces expanding into full autonomous agent loops.</li>
+            <li><strong>Cloud Provider Terms Changes:</strong> Potential restrictions on free tier compute utilization patterns.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> STRATEGIC AUDIT</div>
+      <div class="footer-meta">2X2 SWOT MATRIX ANALYSIS</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 14: GAPS & STRATEGIC OPPORTUNITIES ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge">Strategic Analysis</div>
+        <h2 class="slide-title">Identified Gaps & High-Value Opportunities</h2>
+        <p class="slide-subtitle">Transforming architectural vulnerabilities into defensible commercial revenue streams.</p>
+      </div>
+      <div class="slide-number">14 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3" style="margin-bottom:20px;">
+        <div class="card">
+          <div class="tag-badge amber" style="margin-bottom:8px;">Current Gap #1</div>
+          <div class="card-title">Single-Tenant VPS Provisioning</div>
+          <p class="card-desc">Currently, deploying Sleex requires setting up an Oracle VPS, Portainer, and Cloudflare credentials manually.</p>
+          <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:10px; margin-top:8px;">
+            <div style="font-size:12px; font-weight:700; color:#38bdf8; text-transform:uppercase;">Strategic Opportunity:</div>
+            <p style="font-size:13px; color:#cbd5e1; margin-top:4px;"><strong>Turnkey Hosted SaaS (Sleex Cloud):</strong> One-click provisioning where users simply sign in with GitHub, and our orchestrator automatically spawns an isolated workspace cluster behind the scenes.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tag-badge amber" style="margin-bottom:8px;">Current Gap #2</div>
+          <div class="card-title">Interactive Terminal & Live Previews</div>
+          <p class="card-desc">PWA currently operates via structured diffs and streaming transcripts; it lacks an interactive xterm terminal and live web app iframe preview.</p>
+          <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:10px; margin-top:8px;">
+            <div style="font-size:12px; font-weight:700; color:#38bdf8; text-transform:uppercase;">Strategic Opportunity:</div>
+            <p style="font-size:13px; color:#cbd5e1; margin-top:4px;"><strong>PWA Collaborative Canvas:</strong> Integrate browser-based WebAssembly terminal and instant ephemeral preview URLs for full frontend validation right on mobile screens.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="tag-badge amber" style="margin-bottom:8px;">Current Gap #3</div>
+          <div class="card-title">Enterprise Spend Guardrails</div>
+          <p class="card-desc">Auto-routing relies on provider price bands, but lacks strict dollar budgets, monthly organization quotas, and multi-team chargeback reporting.</p>
+          <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:10px; margin-top:8px;">
+            <div style="font-size:12px; font-weight:700; color:#38bdf8; text-transform:uppercase;">Strategic Opportunity:</div>
+            <p style="font-size:13px; color:#cbd5e1; margin-top:4px;"><strong>Enterprise FinOps & Spend Governance:</strong> Hard dollar caps, department billing allocations, and SOC2-compliant tamper-proof audit trails for AI expenditures.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card highlight" style="padding:18px 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h4 style="font-size:16px; color:#fff;">The Standalone Opportunity: Headroom Enterprise Token Optimizer</h4>
+            <p style="font-size:13px; color:#94a3b8;">Headroom can be packaged and licensed as an enterprise API gateway plugin for any organization using LangChain, CrewAI, or AutoGen, reducing enterprise token bills by 50% with zero code modifications.</p>
+          </div>
+          <div class="stat-value emerald" style="font-size:28px;">$50k+ ACV</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> MARKET GAP ANALYSIS</div>
+      <div class="footer-meta">STRATEGIC PRODUCT EVOLUTION OPPORTUNITIES</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 15: ACTIONABLE ROADMAP ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge emerald">Execution Plan</div>
+        <h2 class="slide-title">Actionable Product Roadmap (2027)</h2>
+        <p class="slide-subtitle">A disciplined quarterly execution plan to scale from technical prototype to commercial leader.</p>
+      </div>
+      <div class="slide-number">15 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="timeline">
+        <div class="timeline-phase">
+          <div class="timeline-quarter">Q1 2027</div>
+          <div class="timeline-title">Hardening & SaaS Core</div>
+          <ul class="timeline-items">
+            <li>Automated workspace state backups to Cloudflare R2</li>
+            <li>Hard dollar budgets & spending guardrails</li>
+            <li>Turnkey multi-tenant container orchestrator</li>
+            <li>SOC2 Type 1 readiness & encrypted audit ledger</li>
+          </ul>
+        </div>
+
+        <div class="timeline-phase">
+          <div class="timeline-quarter">Q2 2027</div>
+          <div class="timeline-title">Mobile 2.0 & Canvas</div>
+          <ul class="timeline-items">
+            <li>Interactive collaborative canvas & mobile diff editor</li>
+            <li>Low-latency WebSockets terminal streaming</li>
+            <li>Enhanced voice-driven task briefing</li>
+            <li>Automated visual PR comparisons using Playwright</li>
+          </ul>
+        </div>
+
+        <div class="timeline-phase">
+          <div class="timeline-quarter">Q3 2027</div>
+          <div class="timeline-title">Multi-Cloud Fleet</div>
+          <ul class="timeline-items">
+            <li>Auto-scaling worker fleet (Hetzner, AWS, GCP)</li>
+            <li>Multi-repository monorepo dependency graph</li>
+            <li>ClawHub public skill marketplace integration</li>
+            <li>Autonomous bug triage from Sentry / Datadog alerts</li>
+          </ul>
+        </div>
+
+        <div class="timeline-phase">
+          <div class="timeline-quarter">Q4 2027</div>
+          <div class="timeline-title">Commercial Launch</div>
+          <ul class="timeline-items">
+            <li>Public self-service SaaS portal launch</li>
+            <li>Enterprise on-premise private appliance release</li>
+            <li>SOC2 Type 2 compliance certification</li>
+            <li>Global GTM expansion & Series A fundraising</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top:24px;">
+        <div class="stat-card">
+          <div class="stat-value">Q1 Goal</div>
+          <div class="stat-label">Multi-Tenant MVP</div>
+          <div class="stat-sub">10 enterprise pilot accounts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value purple">Q2 Goal</div>
+          <div class="stat-label">Mobile Canvas</div>
+          <div class="stat-sub">5,000 active developers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value emerald">Q4 Goal</div>
+          <div class="stat-label">$1.8M ARR</div>
+          <div class="stat-sub">120 paying corporate teams</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> EXECUTION ROADMAP</div>
+      <div class="footer-meta">4-QUARTER PRODUCT MILESTONES & TARGETS</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 16: LIVE TESTING METHODOLOGY & DOGFOODING ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge">Live Verification</div>
+        <h2 class="slide-title">Live Testing Methodology & Dogfooding Benchmarks</h2>
+        <p class="slide-subtitle">Multi-stage engineering verification across production repositories and live issue-to-PR lifecycles.</p>
+      </div>
+      <div class="slide-number">16 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-3" style="margin-bottom:24px;">
+        <div class="card">
+          <div class="tag-badge" style="margin-bottom:6px;">Phase 1: Dogfooding</div>
+          <div style="font-size:24px; font-weight:800; color:#fff; font-family:'JetBrains Mono',monospace;">Live Repositories</div>
+          <p class="card-desc" style="margin-top:8px;">Autonomous multi-agent execution operating directly on Sleex and Sleex-VPS codebases.</p>
+          <ul class="card-list">
+            <li>End-to-end bug fixing from issue description</li>
+            <li>Zero manual git worktree or merge intervention</li>
+            <li>Subagent conflict detection and self-correction</li>
+            <li>Automated test generation and execution</li>
+          </ul>
+        </div>
+
+        <div class="card highlight">
+          <div class="tag-badge emerald" style="margin-bottom:6px;">Phase 2: Multi-Cloud Elasticity</div>
+          <div style="font-size:24px; font-weight:800; color:#34d399; font-family:'JetBrains Mono',monospace;">AWS, GCP &amp; Azure</div>
+          <p class="card-desc" style="margin-top:8px;">Live resilience and failover testing across serverless micro-workers and container runtimes.</p>
+          <ul class="card-list">
+            <li>AWS Lambda micro-worker test runs (&lt;12 min)</li>
+            <li>GCP Cloud Run high-memory compilation sandboxes</li>
+            <li>Azure Container Apps (ACA) on-demand job controller</li>
+            <li>Seamless fallback to VPS worker on cloud timeouts</li>
+          </ul>
+        </div>
+
+        <div class="card accent-purple">
+          <div class="tag-badge purple" style="margin-bottom:6px;">Phase 3: Model &amp; Compression</div>
+          <div style="font-size:24px; font-weight:800; color:#c084fc; font-family:'JetBrains Mono',monospace;">Headroom Benchmarks</div>
+          <p class="card-desc" style="margin-top:8px;">Measuring real-world prompt compression efficiency, latency overhead, and cost attribution.</p>
+          <ul class="card-list">
+            <li>40%–70% context reduction verified live</li>
+            <li>Dynamic <span class="code-badge">goLimits</span> model price-band routing</li>
+            <li>Free-tier model priority (Gemini Flash, Groq, CF)</li>
+            <li>Sub-second proxy overhead under load</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <div class="stat-card">
+          <div class="stat-value emerald">98.4%</div>
+          <div class="stat-label">Suite Pass Rate</div>
+          <div class="stat-sub">Automated unit &amp; integration tests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">$0.18</div>
+          <div class="stat-label">Token COGS / PR</div>
+          <div class="stat-sub">Headroom compression verified</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value purple">3 Clouds</div>
+          <div class="stat-label">Worker Elasticity</div>
+          <div class="stat-sub">AWS Lambda, GCP Cloud Run, Azure Jobs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value amber">&lt;3 min</div>
+          <div class="stat-label">Self-Healing</div>
+          <div class="stat-sub">Automated blue/green rollback safety</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> LIVE TESTING METHODOLOGY</div>
+      <div class="footer-meta">DOGFOODING BENCHMARKS &amp; QUALITY VERIFICATION</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 17: TEST HARNESS & QUALITY VERIFICATION ==================== -->
+  <div class="slide">
+    <div class="slide-header">
+      <div class="header-left">
+        <div class="tag-badge purple">Quality Assurance</div>
+        <h2 class="slide-title">Test Harness, Automated Suites &amp; Verification</h2>
+        <p class="slide-subtitle">Multi-tier test automation ensuring zero regressions and stable distributed runtimes.</p>
+      </div>
+      <div class="slide-number">17 / 18</div>
+    </div>
+
+    <div class="slide-content">
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="card highlight">
+          <div class="card-header">
+            <div class="card-icon">🧪</div>
+            <div class="card-title">Automated Test Suites &amp; Controllers</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:12px; margin-top:10px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <span style="font-weight:700; color:#fff; font-size:14px;">Core Runtime &amp; Auth Suites</span>
+                <span style="font-family:'JetBrains Mono',monospace; color:#38bdf8;">tests/*.test.mjs</span>
+              </div>
+              <span style="font-size:12px; color:#94a3b8;">Unit tests for Google OAuth 2.0 PKCE, MemberDirectory DO RBAC, ChatAgent streaming, and CodeAgent branch ledgers.</span>
+            </div>
+
+            <div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <span style="font-weight:700; color:#fff; font-size:14px;">Azure Worker Job Controller</span>
+                <span style="font-family:'JetBrains Mono',monospace; color:#34d399;">azure-worker.test.mjs</span>
+              </div>
+              <span style="font-size:12px; color:#94a3b8;">Validates ARM <span class="code-badge">Microsoft.App/jobs</span> job dispatch, OAuth2 token renewal, execution polling, and error handling.</span>
+            </div>
+
+            <div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <span style="font-weight:700; color:#fff; font-size:14px;">Worker Profile Drift Verification</span>
+                <span style="font-family:'JetBrains Mono',monospace; color:#c084fc;">claw.test.mjs</span>
+              </div>
+              <span style="font-size:12px; color:#94a3b8;">Ensures OpenClaw configuration parity across cloud providers (AWS, GCP, Azure, VPS) without configuration divergence.</span>
+            </div>
+
+            <div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <span style="font-weight:700; color:#fff; font-size:14px;">Blue/Green Auto-Updater Recovery</span>
+                <span style="font-family:'JetBrains Mono',monospace; color:#fbbf24;">updater.mjs</span>
+              </div>
+              <span style="font-size:12px; color:#94a3b8;">3-minute health probe verification with automated rollback to the previous Docker container generation on failure.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card accent-purple">
+          <div class="card-header">
+            <div class="card-icon">🛡️</div>
+            <div class="card-title">Production Quality &amp; Security Verification</div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:16px; margin-top:10px;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="width:48px; height:48px; border-radius:12px; background:rgba(52,211,153,0.15); color:#34d399; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px;">1</div>
+              <div>
+                <div style="font-size:16px; font-weight:700; color:#fff;">Zero Exposed Listening Ports</div>
+                <div style="font-size:13px; color:#94a3b8;">All inter-service and cloud worker communications use internal Unix sockets or reverse SSH via Cloudflare Access.</div>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="width:48px; height:48px; border-radius:12px; background:rgba(56,189,248,0.15); color:#38bdf8; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px;">2</div>
+              <div>
+                <div style="font-size:16px; font-weight:700; color:#fff;">Memory Wiki Knowledge Integrity</div>
+                <div style="font-size:13px; color:#94a3b8;">OpenClaw Memory Wiki automatically compiles provenance, claims, and cross-session test history.</div>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="width:48px; height:48px; border-radius:12px; background:rgba(192,132,252,0.15); color:#c084fc; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px;">3</div>
+              <div>
+                <div style="font-size:16px; font-weight:700; color:#fff;">Strict Linux Capability Dropping</div>
+                <div style="font-size:13px; color:#94a3b8;">Containers run with <span class="code-badge">cap_drop: [ALL]</span> and non-root execution ensuring zero host filesystem penetration.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div class="footer-brand">SLEEX <span>//</span> QUALITY ASSURANCE</div>
+      <div class="footer-meta">AUTOMATED TEST HARNESS &amp; SYSTEM REGRESSION GATES</div>
+    </div>
+  </div>
+
+  <!-- ==================== SLIDE 18: CONCLUSION & TECHNICAL NEXT STEPS ==================== -->
+  <div class="slide cover-slide" style="padding:80px 100px;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div style="width:40px; height:40px; background:linear-gradient(135deg, #38bdf8, #6366f1); border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:22px; color:#fff;">S</div>
+        <span style="font-size:24px; font-weight:800; letter-spacing:1px; color:#ffffff;">SLEEX</span>
+      </div>
+      <div class="tag-badge emerald">Live Testing Phase: Next Actions</div>
+    </div>
+
+    <div class="cover-hero" style="max-width:1100px;">
+      <h2 style="font-size:56px; font-weight:900; letter-spacing:-1.5px; line-height:1.1; color:#fff;">
+        Live Testing Phase: Operational Execution &amp; Verification.
+      </h2>
+      <p style="font-size:22px; color:#cbd5e1; line-height:1.4;">
+        The sovereign, model-agnostic, multi-agent engineering architecture is live and under active production testing across real repositories.
+      </p>
+
+      <div class="grid-2" style="margin-top:20px;">
+        <div class="card highlight" style="padding:24px;">
+          <div style="font-size:14px; font-weight:700; color:#38bdf8; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Multi-Cloud Verification Roadmap</div>
+          <p style="font-size:15px; color:#cbd5e1; line-height:1.5;">Incorporate Azure Container Apps Jobs into live PR dispatch pipelines, benchmark execution latency against Cloud Run, and verify automatic failover.</p>
+          <div style="margin-top:12px; font-size:14px; font-family:'JetBrains Mono',monospace; color:#fff;">PR #450: docs/sleex-presentation-deck</div>
+        </div>
+
+        <div class="card accent-green" style="padding:24px;">
+          <div style="font-size:14px; font-weight:700; color:#34d399; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Internal Dogfooding &amp; Review Loop</div>
+          <p style="font-size:15px; color:#cbd5e1; line-height:1.5;">Expand autonomous Claw Team assignments on internal issues, track test pass rates, and validate Memory Wiki provenance compilation.</p>
+          <div style="margin-top:12px; font-size:14px; font-family:'JetBrains Mono',monospace; color:#34d399;">https://sleex.org/#/docs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Live App</span>
+        <span class="cover-meta-value">https://sleex.org</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Architecture Platform</span>
+        <span class="cover-meta-value">Sleex Autonomous Engineering Platform</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Current Phase</span>
+        <span class="cover-meta-value">Live Multi-Cloud Dogfooding &amp; Architecture Verification</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
